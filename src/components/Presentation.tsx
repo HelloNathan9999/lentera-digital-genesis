@@ -34,7 +34,7 @@ const Presentation: React.FC = () => {
   return (
     <div className="w-full h-screen overflow-hidden relative">
       <div 
-        className="flex transition-transform duration-500 ease-in-out h-full"
+        className="flex transition-all duration-1000 ease-in-out h-full"
         style={{ transform: `translateX(-${(currentSlide - 1) * 100}%)` }}
       >
         {Array.from({ length: totalSlides }, (_, index) => (
@@ -44,16 +44,24 @@ const Presentation: React.FC = () => {
               totalSlides={totalSlides}
               onNext={nextSlide}
               onPrev={prevSlide}
+              isActive={currentSlide === index + 1}
             />
           </div>
         ))}
       </div>
       
-      {/* Instructions */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30">
-        <div className="bg-black/50 backdrop-blur-sm rounded-lg px-4 py-2 text-white text-sm">
-          Gunakan tombol panah ← → untuk navigasi
-        </div>
+      {/* Small Pagination Dots */}
+      <div className="absolute top-6 left-6 flex space-x-1 z-30">
+        {Array.from({ length: totalSlides }, (_, i) => (
+          <div
+            key={i}
+            className={`w-2 h-2 rounded-full transition-all duration-500 ${
+              i + 1 === currentSlide
+                ? 'bg-white/90 shadow-md scale-125'
+                : 'bg-white/30 hover:bg-white/50'
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
